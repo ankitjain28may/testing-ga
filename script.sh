@@ -10,10 +10,11 @@ format_response () {
     sed -i '4s/^/```diff\n/' $PAYLOAD
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
+    cat $PAYLOAD
 }
 
 send_response () {
-    format_response "test"
+    format_response "changeing: *hekko*"
     PAYLOAD=$(echo '{}' | jq --arg body "`cat ./abc.txt`" '.body = $body')
     URI=https://api.github.com
     API_HEADER="Accept: application/vnd.github.v3+json"
