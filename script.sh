@@ -14,7 +14,7 @@ format_response () {
     if [ "$2" = true ]; 
     then
         echo "Hello world"
-        DA=$DA"**ERROR**"
+        DA="*$DA*\n**ERROR**"
         sed -i "1s/^/$DA\n/" $PAYLOAD    
     fi
 }
