@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# set -e
 format_response () {
     PAYLOAD="abc.txt"
     DATA=$1
@@ -9,8 +9,8 @@ format_response () {
     sed -i '3s/^/```diff\n/' $PAYLOAD
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
-
-    if [[ -n "$DATA" ]]; 
+    echo $2
+    if [ "$2" = true ]; 
     then
         echo "Hello world"
         sed -i "1s/^/$DATA\n/" $PAYLOAD    
@@ -19,7 +19,7 @@ format_response () {
 
 
 send_response () {
-    format_response "hello\: \*world\*"
+    format_response "hello: *world*" true
     PAYLOAD=$(echo '{}' | jq --arg body "`cat ./abc.txt`" '.body = $body')
     URI=https://api.github.com
     API_HEADER="Accept: application/vnd.github.v3+json"
