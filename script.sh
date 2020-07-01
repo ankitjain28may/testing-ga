@@ -10,9 +10,11 @@ format_response () {
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
     echo $2
+    DA=$DATA
     if [ "$2" = true ]; 
     then
         echo "Hello world"
+        DATA=$DATA+"**ERROR**"
         sed -i "1s/^/$DATA\n/" $PAYLOAD    
     fi
 }
