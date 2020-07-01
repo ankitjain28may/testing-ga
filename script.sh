@@ -10,7 +10,7 @@ format_response () {
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
 
-    if [[ -n "$DATA" ]]; 
+    if [[ ! -z "$DATA" ]]; 
     then
         echo "Hello world"
         sed -i "1s/^/$DATA\n/" $PAYLOAD    
