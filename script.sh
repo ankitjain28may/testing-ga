@@ -1,9 +1,8 @@
 #!/bin/sh
 
 format_response () {
-    PAYLOAD=$1
-    DATA=$2
-    echo $PAYLOAD
+    PAYLOAD="abc.txt"
+    DATA=$1
     echo $DATA
     sed -i "1s/^/$DATA\n/" $PAYLOAD
     sed -i '2s/^/<details><summary>Show Output<\/summary>\n/' $PAYLOAD
@@ -11,18 +10,17 @@ format_response () {
     sed -i '4s/^/```diff\n/' $PAYLOAD
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
-    return $PAYLOAD
 }
 
 send_response () {
-    FORMAT=$(format_response $1 "test")
-    PAYLOAD=$(echo '{}' | jq --arg body "`cat $FORMAT`" '.body = $body')
+    format_response "test"
+    PAYLOAD=$(echo '{}' | jq --arg body "`cat ./abc.txt`" '.body = $body')
     URI=https://api.github.com
     API_HEADER="Accept: application/vnd.github.v3+json"
     AUTH_HEADER="Authorization: token $GIT_TOKEN"
     COMMENTS_URL=$(jq -r ".issue.comments_url" "$GITHUB_EVENT_PATH")
     curl -XPOST -s -S -H "${AUTH_HEADER}" -H "${API_HEADER}" --data "$PAYLOAD" "$COMMENTS_URL"
 }
+PAYLOAD=`cat ./abc.txt`
 
-PAYLOAD=`cat abc.txt`
 send_response $PAYLOAD
