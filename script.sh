@@ -4,13 +4,18 @@ format_response () {
     PAYLOAD="abc.txt"
     DATA=$1
     echo $DATA
-    sed -i "1s/^/$DATA\n/" $PAYLOAD
-    sed -i '2s/^/<details><summary>Show Output<\/summary>\n/' $PAYLOAD
-    sed -i '3s/^/\n/' $PAYLOAD
-    sed -i '4s/^/```diff\n/' $PAYLOAD
+    sed -i '1s/^/<details><summary>Show Output<\/summary>\n/' $PAYLOAD
+    sed -i '2s/^/\n/' $PAYLOAD
+    sed -i '3s/^/```diff\n/' $PAYLOAD
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
+
+    if [[ -z $DATA ]]; 
+    then
+        sed -i "1s/^/$DATA\n/" $PAYLOAD    
+    fi
 }
+
 
 send_response () {
     format_response "hello: *world*"
