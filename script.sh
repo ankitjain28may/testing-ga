@@ -19,7 +19,7 @@ format_response () {
 
 
 send_response () {
-    format_response "hello: *world*" true
+    format_response "hello: *world*\nError" 
     PAYLOAD=$(echo '{}' | jq --arg body "`cat ./abc.txt`" '.body = $body')
     URI=https://api.github.com
     API_HEADER="Accept: application/vnd.github.v3+json"
