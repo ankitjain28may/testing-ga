@@ -3,14 +3,15 @@
 format_response () {
     PAYLOAD=$1
     DATA=$2
-
+    echo $PAYLOAD
+    echo $DATA
     sed -i "1s/^/$DATA\n/" $PAYLOAD
     sed -i '2s/^/<details><summary>Show Output<\/summary>\n/' $PAYLOAD
     sed -i '3s/^/\n/' $PAYLOAD
     sed -i '4s/^/```diff\n/' $PAYLOAD
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
-
+    return $PAYLOAD
 }
 
 send_response () {
