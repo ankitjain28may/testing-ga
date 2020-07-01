@@ -10,7 +10,7 @@ format_response () {
     echo "\`\`\`" >> $PAYLOAD
     echo "</details>" >> $PAYLOAD
 
-    if [[ ! -z "$DATA" ]]; 
+    if [[ -n "$DATA" ]]; 
     then
         echo "Hello world"
         sed -i "1s/^/$DATA\n/" $PAYLOAD    
@@ -19,7 +19,7 @@ format_response () {
 
 
 send_response () {
-    format_response "hello: *world*"
+    format_response "hello\: \*world\*"
     PAYLOAD=$(echo '{}' | jq --arg body "`cat ./abc.txt`" '.body = $body')
     URI=https://api.github.com
     API_HEADER="Accept: application/vnd.github.v3+json"
