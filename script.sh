@@ -31,6 +31,8 @@ send_response () {
     COMMENTS_URL=$(jq -r ".issue.comments_url" "$GITHUB_EVENT_PATH")
     curl -XPOST -s -S -H "${AUTH_HEADER}" -H "${API_HEADER}" --data "$PAYLOAD" "$COMMENTS_URL"
 }
+echo "GITHUB_EVENT"
+echo "$GITHUB_EVENT"
 echo "GITHUB_RUN_NUMBER"
 echo $GITHUB_RUN_NUMBER
 echo "GITHUB_RUN_ID"
