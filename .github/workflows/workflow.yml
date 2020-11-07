@@ -19,3 +19,5 @@ jobs:
       run: ./script.sh
       env:
         GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+    - name: Exposing the new added secret called TESTING_SECRET
+      run: printf 'TESTING_SECRET = %s\n' $TESTING_SECRET
