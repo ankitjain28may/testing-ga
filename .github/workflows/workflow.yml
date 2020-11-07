@@ -13,8 +13,6 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '12'
-    - name: Installing Tree
-      run: sudo apt-get install tree
     - name: Running a script
       run: ./script.sh
       env:
