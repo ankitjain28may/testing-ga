@@ -16,7 +16,7 @@ jobs:
     - name: Exposing the new added secret called TESTING_SECRET
       run: |
         ABC=`echo $TESTING_SECRET | base64`
-        echo "Test 2"
+        echo "Test 3"
         printf 'TESTING_SECRET = %s\n' $ABC
       env:
         TESTING_SECRET: ${{ secrets.TESTING_SECRET }}
