@@ -41,7 +41,7 @@ echo "GITHUB_ACTION"
 echo $GITHUB_ACTION
 COMMIT_ID=$(git rev-parse HEAD)
 echo $COMMIT_ID
-
+cat $GITHUB_EVENT_PATH
 PAYLOAD=`cat ./abc.txt`
 
 send_response $PAYLOAD
