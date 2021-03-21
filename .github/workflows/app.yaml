@@ -34,6 +34,7 @@ jobs:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
       - name: Running script to deploy the pod and create user in db
         run: |
+          echo $HEAD_SHA
           FILE=`git diff-tree --no-commit-id --name-only -r $HEAD_SHA`
           echo $FILE
         shell: bash
