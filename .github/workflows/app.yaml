@@ -5,9 +5,9 @@ name: CI
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches:
-      - "*"
+  # push:
+  #   branches:
+  #     - "*"
   pull_request:
     branches:
     - master
@@ -39,7 +39,7 @@ jobs:
           echo $FILE
         shell: bash
         env:
-          HEAD_SHA: ${{ steps.comment-branch.outputs.head_ref }}
+          HEAD_SHA: ${{ steps.comment-branch.outputs.head_sha }}
           # FILES_ADDED: ${{ steps.files.outputs.added }}
           # FILES_MODIFIED: ${{ steps.files.outputs.modified }}
           # FILES_ALL: ${{ steps.files.outputs.all }}
