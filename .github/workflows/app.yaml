@@ -20,6 +20,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # Runs a single command using the runners shell
+      - uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v2
+        if: success()
+        with:
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
       - name: Running script to deploy the pod and create user in db
         run: |
           git diff-tree --no-commit-id --name-only -r $GITHUB_SHA
