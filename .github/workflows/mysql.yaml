@@ -1,0 +1,56 @@
+on: [push]
+jobs:
+  mysql_service:
+    runs-on: [ ubuntu-latest ]
+    continue-on-error: false
+    name: Mysql
+    services:
+      mysql:
+        image: ankitjain28/mysql-custom:custom
+        options: --name mysql
+        ports:
+          - 3306/tcp
+        env:
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+          BITNAMI_DEBUG: true
+    steps:
+      - name: cleanup #https://github.com/actions/checkout/issues/211
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+      - name: checkout
+        id: checkout
+        uses: actions/checkout@v2
+        env:
+          ACTIONS_STEP_DEBUG: true
+      - name: restart_mysql
+        run: |
+          docker ps -a
+          docker logs mysql
+          sleep 30
+          echo "##########################################"
+          while ! nc -z 127.0.0.1 "$MYSQL_PORT";
+          do
+            sleep 10;
+            echo "Waiting for port $MYSQL_PORT..."
+          done;
+          
+          echo "############## MAX_CONNECTION ############################"
+          mysql -h"$MYSQL_HOST" -u"root" -p"root" -P"$MYSQL_PORT" -e "SHOW VARIABLES LIKE 'max_connections'"
+          
+          # echo "############### RESTART ###########################"
+          # docker restart mysql
+          
+          # echo "##########################################"
+          # while ! nc -z 127.0.0.1 "$MYSQL_PORT";
+          # do
+          #   sleep 10;
+          #   echo "Waiting for port $MYSQL_PORT..."
+          # done;
+          
+          # echo "################### MAX_CONNECTION #######################"
+          # mysql -h"$MYSQL_HOST" -u"root" -p"root" -P"$MYSQL_PORT" -e "SHOW VARIABLES LIKE 'max_connections'"
+        env:
+          MYSQL_HOST: "127.0.0.1"
+          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
