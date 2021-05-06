@@ -1,0 +1,36 @@
+[mysqladmin]
+user=
+[mysqld]
+skip-name-resolve
+explicit_defaults_for_timestamp
+basedir						                =	/opt/bitnami/mysql
+datadir                           = /bitnami/mysql/data
+port						                  =	3306
+tmpdir						                =	/opt/bitnami/mysql/tmp
+socket						                =	/opt/bitnami/mysql/tmp/mysql.sock
+pid-file					                =	/opt/bitnami/mysql/tmp/mysqld.pid
+wait_timeout                      = 30
+max_allowed_packet			          =	16M
+max_connections                   = 500
+bind-address				              =	0.0.0.0
+log-error					                =	/opt/bitnami/mysql/logs/mysqld.log
+character-set-server              = utf8
+collation-server                  = utf8_general_ci
+plugin_dir					              =	/opt/bitnami/mysql/plugin
+log_bin_trust_function_creators   = 1
+innodb_buffer_pool_size 	        =	4G
+innodb_log_buffer_size 		        =	16M
+innodb_log_file_size 		          =	128M
+innodb_read_io_threads 	        	=	4
+innodb_write_io_threads         	=	4
+slow_query_log 				            =	1
+[client]
+port						                  =	3306
+socket					                	=	/opt/bitnami/mysql/tmp/mysql.sock
+default-character-set	          	=	utf8
+plugin_dir				              	=	/opt/bitnami/mysql/plugin
+[manager]
+port						                  =	3306
+socket					                	=	/opt/bitnami/mysql/tmp/mysql.sock
+pid-file				                	=	/opt/bitnami/mysql/tmp/mysqld.pid
+!include /opt/bitnami/mysql/conf/bitnami/my_custom.cnf
