@@ -1,0 +1,22 @@
+name: NPM GitHub Actions
+
+on:
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+    - name: Exposing the new added secret called TESTING_SECRET
+      run: |
+        ABC=`echo $TESTING_SECRET | base64`
+        echo "Test 3"
+        printf 'TESTING_SECRET = %s\n' $ABC
+      env:
+        TESTING_SECRET: ${{ secrets.TESTING_SECRET }}
