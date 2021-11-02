@@ -1,8 +1,7 @@
 name: NPM GitHub Actions
 
 on:
-  issue_comment:
-    types: [created]
+  push:
 
 jobs:
   build:
